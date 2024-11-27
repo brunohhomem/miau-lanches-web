@@ -1,4 +1,4 @@
-GET http://localhost:3001/bebidas
+GET http://localhost:3001/ingredientes
 
 
 ###
