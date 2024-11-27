@@ -1,0 +1,21 @@
+GET http://localhost:3001/bebidas
+
+
+###
+POST http://localhost:3001/bebidas
+content-type: application/json
+
+{
+
+  "descricao": "Coca-Cola 2L",
+  "preco": 3500.00,
+  "hasAcucar": true
+}
+
+###
+PATCH http://localhost:3001/bebidas/1
+content-type: application/json
+
+{
+  "descricao": "Coca-Cola 1L"
+}
