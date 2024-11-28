@@ -25,7 +25,6 @@ export function NovaBebida() {
     hasAcucar: false
   })
 
-  // Função para lidar com a mudança nos campos de input
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -37,7 +36,6 @@ export function NovaBebida() {
     }))
   }
 
-  // Função para lidar com a mudança do checkbox
   const handleCheckboxChange = (checked: boolean | false) => {
     setBebida(prev => ({
       ...prev,

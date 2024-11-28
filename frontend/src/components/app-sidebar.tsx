@@ -27,7 +27,7 @@ const items = [
   },
   {
     title: 'Lanches',
-    url: '#',
+    url: '/lanches',
     icon: Sandwich
   },
   {
