@@ -4,6 +4,14 @@ export interface createIngredienteReq {
   isAdicional: boolean
 }
 
-export interface findIngrediente extends createIngredienteReq {
+export interface findIngredienteReq {
+  id?: number
+  descricao?: string
+}
+
+export interface listIngredienteReq {
   id: number
+  descricao: string
+  preco: number
+  isAdicional: boolean
 }

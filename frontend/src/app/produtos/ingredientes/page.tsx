@@ -1,7 +1,6 @@
+import { BuscarIngrediente } from '@/components/buscar-ingrediente'
 import { NovoIngrediente } from '@/components/novo-ingrediente'
 import { TableIngredientes } from '@/components/tabela-ingredientes'
-import { Button } from '@/components/ui/button'
-import { Search } from 'lucide-react'
 
 export default function Ingredientes() {
   return (
@@ -11,10 +10,7 @@ export default function Ingredientes() {
       </div>
       <div className="flex gap-2 mb-10">
         <NovoIngrediente />
-        <Button>
-          <Search />
-          Ingredientes
-        </Button>
+        <BuscarIngrediente />
       </div>
       <TableIngredientes />
     </main>
