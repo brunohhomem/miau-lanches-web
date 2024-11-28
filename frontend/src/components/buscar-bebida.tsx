@@ -13,32 +13,27 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useState } from 'react'
-import {
-  findIngredienteByDescricao,
-  findIngredienteById
-} from '@/services/ingrediente'
 import { Search } from 'lucide-react'
+import { findBebidaByDescricao, findBebidaById } from '@/services/bebida'
 
-interface Ingrediente {
+interface Bebida {
   descricao: string
   preco: number
-  isAdicional: boolean
+  hasAcucar: boolean
 }
 
-interface BuscarIngredienteProps {
-  onIngredienteFind: (ingrediente: Ingrediente | null) => void
+interface BuscarBebidasProps {
+  onBebidaFind: (bebida: Bebida | null) => void
 }
 
-export function BuscarIngrediente({
-  onIngredienteFind
-}: BuscarIngredienteProps) {
+export function BuscarBebidas({ onBebidaFind }: BuscarBebidasProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [ingrediente, setIngrediente] = useState({ id: '', descricao: '' })
-  const [resultado, setResultado] = useState<Ingrediente | null>(null)
+  const [bebida, setBebida] = useState({ id: '', descricao: '' })
+  const [resultado, setResultado] = useState<Bebida | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
-    setIngrediente(prev => ({
+    setBebida(prev => ({
       ...prev,
       [id]: value
     }))
@@ -48,21 +43,21 @@ export function BuscarIngrediente({
     e.preventDefault()
 
     try {
-      let response: Ingrediente | null = null
+      let response: Bebida | null = null
 
-      if (ingrediente.id && !ingrediente.descricao) {
-        response = await findIngredienteById(+ingrediente.id)
-      } else if (ingrediente.descricao && !ingrediente.id) {
-        response = await findIngredienteByDescricao(ingrediente.descricao)
-      } else if (ingrediente.id && ingrediente.descricao) {
-        response = await findIngredienteById(+ingrediente.id)
+      if (bebida.id && !bebida.descricao) {
+        response = await findBebidaById(+bebida.id)
+      } else if (bebida.descricao && !bebida.id) {
+        response = await findBebidaByDescricao(bebida.descricao)
+      } else if (bebida.id && bebida.descricao) {
+        response = await findBebidaById(+bebida.id)
       }
 
       setResultado(response)
-      onIngredienteFind(response)
+      onBebidaFind(response)
       setIsOpen(false)
     } catch (error) {
-      console.error('Erro ao buscar ingrediente:', error)
+      console.error('Erro ao buscar bebida:', error)
     }
   }
 
@@ -70,14 +65,14 @@ export function BuscarIngrediente({
     <>
       <Button variant="outline" onClick={() => setIsOpen(true)}>
         <Search />
-        Ingredientes
+        Buscar Bebida
       </Button>
       {isOpen && (
         <Dialog onOpenChange={setIsOpen} open={isOpen}>
           <DialogTrigger asChild></DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Buscar Ingrediente</DialogTitle>
+              <DialogTitle>Buscar Bebida</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="grid gap-2 py-2">
               <div className="grid grid-cols-4 items-center gap-4">
@@ -87,7 +82,7 @@ export function BuscarIngrediente({
                 <Input
                   id="id"
                   type="number"
-                  value={ingrediente.id}
+                  value={bebida.id}
                   onChange={handleChange}
                   className="col-span-3"
                 />
@@ -99,8 +94,8 @@ export function BuscarIngrediente({
                 <Input
                   id="descricao"
                   type="text"
-                  placeholder="Bacon"
-                  value={ingrediente.descricao}
+                  placeholder="Suco de Laranja"
+                  value={bebida.descricao}
                   onChange={handleChange}
                   className="col-span-3"
                 />

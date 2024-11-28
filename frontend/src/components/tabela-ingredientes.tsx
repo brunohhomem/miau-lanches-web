@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { listIngrediente } from '@/services/api'
+import { listIngrediente } from '@/services/ingrediente'
 
 export function TableIngredientes() {
   const [ingredientes, setIngredientes] = useState([]) // Estado para armazenar os ingredientes

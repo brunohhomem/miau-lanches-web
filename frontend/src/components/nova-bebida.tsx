@@ -14,15 +14,15 @@ import { Label } from '@/components/ui/label'
 import { Plus } from 'lucide-react'
 import { Checkbox } from './ui/checkbox'
 import { useState } from 'react'
-import { createIngrediente } from '@/services/ingrediente'
+import { createBebida } from '@/services/bebida'
 
-export function NovoIngrediente() {
+export function NovaBebida() {
   const [isOpen, setIsOpen] = useState(false)
 
-  const [ingrediente, setIngrediente] = useState({
+  const [bebida, setBebida] = useState({
     descricao: '',
     preco: 0,
-    isAdicional: false
+    hasAcucar: false
   })
 
   // Função para lidar com a mudança nos campos de input
@@ -31,7 +31,7 @@ export function NovoIngrediente() {
   ) => {
     const { id, value, type } = e.target
 
-    setIngrediente(prev => ({
+    setBebida(prev => ({
       ...prev,
       [id]: type === 'number' ? parseFloat(value) : value
     }))
@@ -39,9 +39,9 @@ export function NovoIngrediente() {
 
   // Função para lidar com a mudança do checkbox
   const handleCheckboxChange = (checked: boolean | false) => {
-    setIngrediente(prev => ({
+    setBebida(prev => ({
       ...prev,
-      isAdicional: checked ?? false // Garantindo um valor booleano
+      hasAcucar: checked ?? false // Garantindo um valor booleano
     }))
   }
 
@@ -49,8 +49,8 @@ export function NovoIngrediente() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      await createIngrediente(ingrediente)
-      console.log('Ingrediente criado:', ingrediente)
+      await createBebida(bebida)
+      console.log('Ingrediente criado:', bebida)
       setIsOpen(false)
     } catch (error) {
       console.error('Erro ao criar ingrediente:', error)
@@ -61,14 +61,14 @@ export function NovoIngrediente() {
     <>
       <Button variant="outline" onClick={() => setIsOpen(true)}>
         <Plus />
-        Ingrediente
+        Bebida
       </Button>
       {isOpen && (
         <Dialog onOpenChange={setIsOpen} open={isOpen}>
           <DialogTrigger asChild></DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Novo Ingrediente</DialogTitle>
+              <DialogTitle>Nova Bebida</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="grid gap-2 py-2">
               <div className="grid grid-cols-4 items-center gap-4">
@@ -78,8 +78,8 @@ export function NovoIngrediente() {
                 <Input
                   id="descricao"
                   type="text"
-                  placeholder="Bacon"
-                  value={ingrediente.descricao}
+                  placeholder="Suco de Laranja"
+                  value={bebida.descricao}
                   onChange={handleChange}
                   className="col-span-3"
                 />
@@ -91,17 +91,17 @@ export function NovoIngrediente() {
                 <Input
                   id="preco"
                   type="number"
-                  value={ingrediente.preco}
+                  value={bebida.preco}
                   onChange={handleChange}
                   className="col-span-3"
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="adicional" className="text-right">
-                  Adicional
+                <Label htmlFor="hasAcucar" className="text-right">
+                  Açucar
                 </Label>
                 <Checkbox
-                  checked={ingrediente.isAdicional}
+                  checked={bebida.hasAcucar}
                   onCheckedChange={handleCheckboxChange}
                   className="col-span-3"
                 />
