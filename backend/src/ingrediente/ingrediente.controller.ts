@@ -25,6 +25,11 @@ export class IngredienteController {
     return this.ingredienteService.findAll();
   }
 
+  @Get('/adicionais')
+  findAllAdicionais() {
+    return this.ingredienteService.findAllAdicionais();
+  }
+
   @Get('id/:id')
   findById(@Param('id') id: string) {
     return this.ingredienteService.findById(+id);

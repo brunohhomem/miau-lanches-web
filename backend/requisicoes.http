@@ -1,5 +1,5 @@
 
-GET http://localhost:3001/ingredientes/descricao/sal
+GET http://localhost:3001/ingredientes/adicionais
 
 
 ###
@@ -14,9 +14,9 @@ content-type: application/json
 }
 
 ###
-PATCH http://localhost:3001/bebidas/1
+PATCH http://localhost:3001/ingredientes/1
 content-type: application/json
 
 {
-  "descricao": "Coca-Cola 1L"
+  "isAdicional": true
 }

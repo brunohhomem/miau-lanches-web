@@ -21,6 +21,15 @@ export class IngredienteService {
     });
   }
 
+  async findAllAdicionais() {
+    return this.prismaService.ingrediente.findMany({
+      where: { isAdicional: true },
+      orderBy: {
+        id: 'asc',
+      },
+    });
+  }
+
   async findById(id: number) {
     return this.prismaService.ingrediente.findUnique({
       where: { id },
