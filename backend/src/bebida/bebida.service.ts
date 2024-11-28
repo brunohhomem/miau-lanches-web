@@ -21,9 +21,15 @@ export class BebidaService {
     });
   }
 
-  async findOne(id: number) {
+  async findById(id: number) {
     return this.prismaService.bebida.findUnique({
       where: { id },
+    });
+  }
+
+  async findByDesc(descricao: string) {
+    return this.prismaService.bebida.findFirst({
+      where: { descricao: { contains: descricao, mode: 'insensitive' } },
     });
   }
 

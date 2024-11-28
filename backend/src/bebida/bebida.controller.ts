@@ -25,9 +25,14 @@ export class BebidaController {
     return this.bebidaService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bebidaService.findOne(+id);
+  @Get('id/:id')
+  findById(@Param('id') id: string) {
+    return this.bebidaService.findById(+id);
+  }
+
+  @Get('descricao/:descricao')
+  async findByDesc(@Param('descricao') descricao: string) {
+    return this.bebidaService.findByDesc(descricao);
   }
 
   @Patch(':id')

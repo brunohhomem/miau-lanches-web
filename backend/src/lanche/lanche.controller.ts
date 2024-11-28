@@ -25,9 +25,14 @@ export class LancheController {
     return this.lancheService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.lancheService.findOne(+id);
+  @Get('id/:id')
+  findById(@Param('id') id: string) {
+    return this.lancheService.findById(+id);
+  }
+
+  @Get('descricao/:descricao')
+  async findByDesc(@Param('descricao') descricao: string) {
+    return this.lancheService.findByDesc(descricao);
   }
 
   @Patch(':id')

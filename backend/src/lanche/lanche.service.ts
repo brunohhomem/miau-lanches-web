@@ -40,6 +40,24 @@ export class LancheService {
     });
   }
 
+  async findById(id: number) {
+    return this.prismaService.lanche.findUnique({
+      where: { id },
+      include: {
+        ingredientes: true,
+      },
+    });
+  }
+
+  async findByDesc(descricao: string) {
+    return this.prismaService.lanche.findFirst({
+      where: { descricao: { contains: descricao, mode: 'insensitive' } },
+      include: {
+        ingredientes: true,
+      },
+    });
+  }
+
   async update(id: number, updateLancheDto: UpdateLancheDto) {
     const { ingredientesIds, ...rest } = updateLancheDto;
 
