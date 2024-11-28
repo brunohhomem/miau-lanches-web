@@ -1,4 +1,5 @@
-GET http://localhost:3001/ingredientes
+
+GET http://localhost:3001/ingredientes/descricao/sal
 
 
 ###

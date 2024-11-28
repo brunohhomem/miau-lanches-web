@@ -25,9 +25,14 @@ export class IngredienteController {
     return this.ingredienteService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ingredienteService.findOne(+id);
+  @Get('id/:id')
+  findById(@Param('id') id: string) {
+    return this.ingredienteService.findById(+id);
+  }
+
+  @Get('descricao/:descricao')
+  async findByDesc(@Param('descricao') descricao: string) {
+    return this.ingredienteService.findByDesc(descricao);
   }
 
   @Patch(':id')

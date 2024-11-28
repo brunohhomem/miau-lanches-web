@@ -21,9 +21,15 @@ export class IngredienteService {
     });
   }
 
-  async findOne(id: number) {
+  async findById(id: number) {
     return this.prismaService.ingrediente.findUnique({
       where: { id },
+    });
+  }
+
+  async findByDesc(descricao: string) {
+    return this.prismaService.ingrediente.findFirst({
+      where: { descricao: { contains: descricao, mode: 'insensitive' } },
     });
   }
 
