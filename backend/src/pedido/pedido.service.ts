@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { CalculateTotalDto } from './dto/calculate-total.dto';
+import { Body, Injectable } from '@nestjs/common';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
 import { UpdatePedidoDto } from './dto/update-pedido.dto';
 import { PrismaService } from 'src/db/prisma.service';
@@ -6,6 +7,38 @@ import { PrismaService } from 'src/db/prisma.service';
 @Injectable()
 export class PedidoService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async calcularPedido({
+    lanches,
+    adicionais,
+    bebidas,
+  }: {
+    lanches: number[];
+    adicionais: number[];
+    bebidas: number[];
+  }) {
+    const lanchesTotal = await this.prismaService.lanche.findMany({
+      where: { id: { in: lanches } },
+      select: { preco: true },
+    });
+
+    const adicionaisTotal = await this.prismaService.ingrediente.findMany({
+      where: { id: { in: adicionais } },
+      select: { preco: true },
+    });
+
+    const bebidasTotal = await this.prismaService.bebida.findMany({
+      where: { id: { in: bebidas } },
+      select: { preco: true },
+    });
+
+    const total =
+      lanchesTotal.reduce((sum, item) => sum + item.preco, 0) +
+      adicionaisTotal.reduce((sum, item) => sum + item.preco, 0) +
+      bebidasTotal.reduce((sum, item) => sum + item.preco, 0);
+
+    return { total };
+  }
 
   async create(createPedidoDto: CreatePedidoDto) {
     const {

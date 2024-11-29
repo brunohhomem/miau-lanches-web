@@ -1,15 +1,8 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { PedidoService } from './pedido.service';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
-import { UpdatePedidoDto } from './dto/update-pedido.dto';
+import { CalculateTotalDto } from './dto/calculate-total.dto';
+// import { UpdatePedidoDto } from './dto/update-pedido.dto';
 
 @Controller('pedidos')
 export class PedidoController {
@@ -18,6 +11,16 @@ export class PedidoController {
   @Post()
   create(@Body() createPedidoDto: CreatePedidoDto) {
     return this.pedidoService.create(createPedidoDto);
+  }
+
+  @Post('calcular')
+  async calculateTotalPedido(@Body() body: CalculateTotalDto) {
+    const { lanches, adicionais, bebidas } = body;
+    return this.pedidoService.calcularPedido({
+      lanches,
+      adicionais,
+      bebidas,
+    });
   }
 
   @Get()

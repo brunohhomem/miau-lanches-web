@@ -8,6 +8,7 @@ import AdicionalMultiselect from './adicional-multiselect'
 import LancheMultiselect from './lanche-multiselect'
 import BebidaMultiselect from './bebida-multiselect'
 import { createPedido } from '@/services/pedido'
+import { api } from '@/services/api'
 
 export default function NovoPedido() {
   const [ingredientesSelecionados, setIngredientesSelecionados] = useState<
@@ -68,19 +69,37 @@ export default function NovoPedido() {
     e.preventDefault()
 
     try {
-      const preco = parseFloat(pedido.preco.toString())
+      // const preco = parseFloat(pedido.preco.toString())
 
       const lanches = lanchesSelecionados.map(Number)
       const adicionais = ingredientesSelecionados.map(Number)
       const bebidas = bebidasSelecionados.map(Number)
 
-      await createPedido({
-        ...pedido,
-        preco,
+      const response = await api.post('/pedidos/calcular', {
         lanches,
         adicionais,
         bebidas
       })
+
+      const { total } = response.data
+
+      console.log(total)
+
+      const userConfirmed = window.confirm(
+        `O total do pedido é R$${total}. Deseja confirmar?`
+      )
+
+      if (!userConfirmed) return
+
+      await createPedido({
+        ...pedido,
+        preco: total,
+        lanches,
+        adicionais,
+        bebidas
+      })
+
+      window.location.reload()
     } catch (error) {
       console.error('Erro ao criar pedido:', error)
     }
