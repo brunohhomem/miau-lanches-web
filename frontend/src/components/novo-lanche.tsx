@@ -19,7 +19,7 @@ export default function NovoLanche() {
   const [lanche, setLanche] = useState({
     descricao: '',
     preco: 0,
-    ingredientes: [] as number[] // Inicializa com um array de números
+    ingredientes: [] as number[]
   })
 
   const handleChange = (
@@ -37,17 +37,26 @@ export default function NovoLanche() {
     e.preventDefault()
 
     try {
-      // Converter os ingredientes selecionados para um array de números
       const ingredientes = ingredientesSelecionados.map(Number)
 
-      // Criar o lanche com o array de números
       await createLanche({
         ...lanche,
-        ingredientes: ingredientes // Atualiza o campo com os valores numéricos
+        ingredientes: ingredientes
       })
+
+      limparCampos()
     } catch (error) {
       console.error('Erro ao criar lanche:', error)
     }
+  }
+
+  const limparCampos = () => {
+    setLanche({
+      descricao: '',
+      preco: 0,
+      ingredientes: []
+    })
+    handleIngredientesChange([])
   }
 
   return (
@@ -79,15 +88,14 @@ export default function NovoLanche() {
           />
         </div>
         <div className=" items-center gap-4">
-          <Label htmlFor="preco" className="text-right">
-            Preço
-          </Label>
           <IngredienteMultiselect
             onIngredientesChange={handleIngredientesChange}
           />
         </div>
 
-        <Button type="submit">Cadastrar</Button>
+        <Button type="submit" className="bg-emerald-700">
+          Cadastrar
+        </Button>
       </form>
     </main>
   )

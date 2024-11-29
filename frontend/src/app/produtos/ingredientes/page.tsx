@@ -20,10 +20,7 @@ export default function Ingredientes() {
 
   return (
     <main>
-      <div>
-        <h1>Ingredientes</h1>
-      </div>
-      <div className="flex gap-2 mb-10">
+      <div className="flex gap-4">
         <NovoIngrediente />
         <BuscarIngrediente onIngredienteFind={handleIngredienteFind} />
       </div>

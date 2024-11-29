@@ -47,18 +47,16 @@ export default function NovoPedido() {
   ) => {
     const { id, value } = e.target
 
-    // Verificar se o campo pertence ao objeto cliente
     if (id.startsWith('cliente.')) {
-      const field = id.split('.')[1] // Pega o campo após 'cliente.'
+      const field = id.split('.')[1]
       setPedido(prev => ({
         ...prev,
         cliente: {
           ...prev.cliente,
-          [field]: value // Atualiza apenas o campo dentro de cliente
+          [field]: value
         }
       }))
     } else {
-      // Se não for um campo dentro de cliente, atualize diretamente no pedido
       setPedido(prev => ({
         ...prev,
         [id]: value
@@ -72,12 +70,10 @@ export default function NovoPedido() {
     try {
       const preco = parseFloat(pedido.preco.toString())
 
-      // Converter os arrays de string[] para number[]
       const lanches = lanchesSelecionados.map(Number)
       const adicionais = ingredientesSelecionados.map(Number)
       const bebidas = bebidasSelecionados.map(Number)
 
-      // Criar o pedido
       await createPedido({
         ...pedido,
         preco,
@@ -92,7 +88,6 @@ export default function NovoPedido() {
 
   return (
     <main className="flex flex-row">
-      <h1>Pedidos</h1>
       <form onSubmit={handleSubmit} className="grid gap-2 py-2">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="descricao" className="text-right">
@@ -128,14 +123,13 @@ export default function NovoPedido() {
           <Input
             id="observacoes"
             type="text"
-            placeholder="Observações sobre o pedido"
+            placeholder="Capricha no bacon"
             value={pedido.observacoes}
             onChange={handleChange}
             className="col-span-3"
           />
         </div>
 
-        {/* Campos para o Cliente */}
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="cliente.nome" className="text-right">
             Nome do Cliente
@@ -143,7 +137,7 @@ export default function NovoPedido() {
           <Input
             id="cliente.nome"
             type="text"
-            placeholder="Nome do Cliente"
+            placeholder="Nome"
             value={pedido.cliente.nome}
             onChange={handleChange}
             className="col-span-3"
@@ -157,7 +151,7 @@ export default function NovoPedido() {
           <Input
             id="cliente.endereco"
             type="text"
-            placeholder="Endereço do Cliente"
+            placeholder="Endereço"
             value={pedido.cliente.endereco}
             onChange={handleChange}
             className="col-span-3"
@@ -171,15 +165,14 @@ export default function NovoPedido() {
           <Input
             id="cliente.telefone"
             type="text"
-            placeholder="Telefone do Cliente"
+            placeholder="Telefone"
             value={pedido.cliente.telefone}
             onChange={handleChange}
             className="col-span-3"
           />
         </div>
 
-        {/* Seleção de Lanches, Adicionais e Bebidas */}
-        <div className="items-center gap-4">
+        <div className="flex gap-4 flex-col w-fit">
           <LancheMultiselect onLancheChange={handleLancheChange} />
           <AdicionalMultiselect
             onIngredientesChange={handleIngredientesChange}
@@ -187,7 +180,9 @@ export default function NovoPedido() {
           <BebidaMultiselect onBebidaChange={handleBebidaChange} />
         </div>
 
-        <Button type="submit">Fazer Pedido</Button>
+        <Button type="submit" className="bg-emerald-700">
+          Cadastrar
+        </Button>
       </form>
     </main>
   )

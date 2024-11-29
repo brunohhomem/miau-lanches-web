@@ -60,15 +60,30 @@ export function BuscarIngrediente({
 
       setResultado(response)
       onIngredienteFind(response)
+      limparCampos()
       setIsOpen(false)
     } catch (error) {
       console.error('Erro ao buscar ingrediente:', error)
     }
   }
 
+  const limparCampos = () => {
+    setIngrediente({
+      id: '',
+      descricao: ''
+    })
+  }
+
   return (
     <>
-      <Button variant="outline" onClick={() => setIsOpen(true)}>
+      <Button
+        variant="default"
+        className="bg-slate-500 text-md"
+        onClick={() => {
+          setIsOpen(true)
+          limparCampos()
+        }}
+      >
         <Search />
         Ingredientes
       </Button>
@@ -105,15 +120,16 @@ export function BuscarIngrediente({
                   className="col-span-3"
                 />
               </div>
-
               <DialogFooter>
-                <Button type="submit">Buscar</Button>
+                <Button type="submit" className="bg-emerald-700">
+                  Buscar
+                </Button>
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="destructive"
                   onClick={() => setIsOpen(false)}
                 >
-                  Cancelar
+                  Fechar
                 </Button>
               </DialogFooter>
             </form>

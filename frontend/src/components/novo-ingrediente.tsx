@@ -25,7 +25,6 @@ export function NovoIngrediente() {
     isAdicional: false
   })
 
-  // Função para lidar com a mudança nos campos de input
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -37,38 +36,51 @@ export function NovoIngrediente() {
     }))
   }
 
-  // Função para lidar com a mudança do checkbox
   const handleCheckboxChange = (checked: boolean | false) => {
     setIngrediente(prev => ({
       ...prev,
-      isAdicional: checked ?? false // Garantindo um valor booleano
+      isAdicional: checked ?? false
     }))
   }
 
-  // Função para lidar com o envio do formulário
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       await createIngrediente(ingrediente)
-      console.log('Ingrediente criado:', ingrediente)
+      limparCampos()
       setIsOpen(false)
     } catch (error) {
       console.error('Erro ao criar ingrediente:', error)
     }
   }
 
+  const limparCampos = () => {
+    setIngrediente({
+      descricao: '',
+      preco: 0,
+      isAdicional: false
+    })
+  }
+
   return (
     <>
-      <Button variant="outline" onClick={() => setIsOpen(true)}>
+      <Button
+        variant="default"
+        className="bg-slate-500 text-md"
+        onClick={() => {
+          setIsOpen(true)
+          limparCampos()
+        }}
+      >
         <Plus />
-        Ingrediente
+        Cadastrar Ingrediente
       </Button>
       {isOpen && (
         <Dialog onOpenChange={setIsOpen} open={isOpen}>
           <DialogTrigger asChild></DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Novo Ingrediente</DialogTitle>
+              <DialogTitle>Cadastrar Ingrediente</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="grid gap-2 py-2">
               <div className="grid grid-cols-4 items-center gap-4">
@@ -107,13 +119,15 @@ export function NovoIngrediente() {
                 />
               </div>
               <DialogFooter>
-                <Button type="submit">Cadastrar</Button>
+                <Button type="submit" className="bg-emerald-700">
+                  Cadastrar
+                </Button>
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="destructive"
                   onClick={() => setIsOpen(false)}
                 >
-                  Cancelar
+                  Fechar
                 </Button>
               </DialogFooter>
             </form>

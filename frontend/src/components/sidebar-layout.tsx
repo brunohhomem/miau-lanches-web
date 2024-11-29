@@ -3,7 +3,10 @@ import { SidebarProvider } from './ui/sidebar'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider defaultOpen>
+    <SidebarProvider
+      defaultOpen
+      className="flex justify-center items-center h-screen bg-gray-100"
+    >
       <AppSidebar />
       <main>{children}</main>
     </SidebarProvider>
