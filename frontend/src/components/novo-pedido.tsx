@@ -83,7 +83,10 @@ export default function NovoPedido() {
 
       const { total } = response.data
 
-      console.log(total)
+      setPedido(prevPedido => ({
+        ...prevPedido,
+        preco: total
+      }))
 
       const userConfirmed = window.confirm(
         `O total do pedido é R$${total}. Deseja confirmar?`
@@ -106,7 +109,7 @@ export default function NovoPedido() {
   }
 
   return (
-    <main className="flex flex-row">
+    <main className="flex flex-row w-96">
       <form onSubmit={handleSubmit} className="grid gap-2 py-2">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="descricao" className="text-right">
@@ -121,20 +124,6 @@ export default function NovoPedido() {
             className="col-span-3"
           />
         </div>
-
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="preco" className="text-right">
-            Preço
-          </Label>
-          <Input
-            id="preco"
-            type="number"
-            value={pedido.preco}
-            onChange={handleChange}
-            className="col-span-3"
-          />
-        </div>
-
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="observacoes" className="text-right">
             Observações
@@ -148,10 +137,9 @@ export default function NovoPedido() {
             className="col-span-3"
           />
         </div>
-
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="cliente.nome" className="text-right">
-            Nome do Cliente
+            Cliente
           </Label>
           <Input
             id="cliente.nome"
@@ -162,7 +150,6 @@ export default function NovoPedido() {
             className="col-span-3"
           />
         </div>
-
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="cliente.endereco" className="text-right">
             Endereço
@@ -197,6 +184,19 @@ export default function NovoPedido() {
             onIngredientesChange={handleIngredientesChange}
           />
           <BebidaMultiselect onBebidaChange={handleBebidaChange} />
+        </div>
+
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="preco" className="text-right">
+            Preço
+          </Label>
+          <Input
+            id="preco"
+            type="number"
+            value={pedido.preco}
+            onChange={handleChange}
+            className="col-span-3"
+          />
         </div>
 
         <Button type="submit" className="bg-emerald-700">

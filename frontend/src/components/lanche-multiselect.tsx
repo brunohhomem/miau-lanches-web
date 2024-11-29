@@ -43,7 +43,7 @@ export default function LancheMultiselect({
         options={lanches}
         onValueChange={handleValueChange}
         defaultValue={selectedLanches}
-        placeholder="Selecione os ingredientes"
+        placeholder="Selecione os lanches"
         variant="inverted"
         maxCount={3}
       />

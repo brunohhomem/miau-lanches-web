@@ -44,23 +44,14 @@ export default function NovoLanche() {
         ingredientes: ingredientes
       })
 
-      limparCampos()
+      window.location.reload()
     } catch (error) {
       console.error('Erro ao criar lanche:', error)
     }
   }
 
-  const limparCampos = () => {
-    setLanche({
-      descricao: '',
-      preco: 0,
-      ingredientes: []
-    })
-    handleIngredientesChange([])
-  }
-
   return (
-    <main className="flex flex-row">
+    <main className="flex flex-row w-96">
       <form onSubmit={handleSubmit} className="grid gap-2 py-2">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="descricao" className="text-right">

@@ -39,16 +39,23 @@ export function NovaBebida() {
   const handleCheckboxChange = (checked: boolean | false) => {
     setBebida(prev => ({
       ...prev,
-      hasAcucar: checked ?? false // Garantindo um valor booleano
+      hasAcucar: checked ?? false
     }))
   }
 
-  // Função para lidar com o envio do formulário
+  const limparCampos = () => {
+    setBebida({
+      descricao: '',
+      preco: 0,
+      hasAcucar: false
+    })
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       await createBebida(bebida)
-      console.log('Ingrediente criado:', bebida)
+      limparCampos()
       setIsOpen(false)
     } catch (error) {
       console.error('Erro ao criar ingrediente:', error)
@@ -57,7 +64,14 @@ export function NovaBebida() {
 
   return (
     <>
-      <Button variant="outline" onClick={() => setIsOpen(true)}>
+      <Button
+        variant="default"
+        className="bg-slate-500 text-md"
+        onClick={() => {
+          setIsOpen(true)
+          limparCampos()
+        }}
+      >
         <Plus />
         Bebida
       </Button>
@@ -105,13 +119,15 @@ export function NovaBebida() {
                 />
               </div>
               <DialogFooter>
-                <Button type="submit">Cadastrar</Button>
+                <Button type="submit" className="bg-emerald-700">
+                  Cadastrar
+                </Button>
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="destructive"
                   onClick={() => setIsOpen(false)}
                 >
-                  Cancelar
+                  Fechar
                 </Button>
               </DialogFooter>
             </form>

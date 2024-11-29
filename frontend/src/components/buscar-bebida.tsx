@@ -39,6 +39,13 @@ export function BuscarBebidas({ onBebidaFind }: BuscarBebidasProps) {
     }))
   }
 
+  const limparCampos = () => {
+    setBebida({
+      id: '',
+      descricao: ''
+    })
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -55,6 +62,7 @@ export function BuscarBebidas({ onBebidaFind }: BuscarBebidasProps) {
 
       setResultado(response)
       onBebidaFind(response)
+      limparCampos()
       setIsOpen(false)
     } catch (error) {
       console.error('Erro ao buscar bebida:', error)
@@ -63,7 +71,14 @@ export function BuscarBebidas({ onBebidaFind }: BuscarBebidasProps) {
 
   return (
     <>
-      <Button variant="outline" onClick={() => setIsOpen(true)}>
+      <Button
+        variant="default"
+        className="bg-slate-500 text-md"
+        onClick={() => {
+          setIsOpen(true)
+          limparCampos()
+        }}
+      >
         <Search />
         Buscar Bebida
       </Button>
@@ -100,15 +115,16 @@ export function BuscarBebidas({ onBebidaFind }: BuscarBebidasProps) {
                   className="col-span-3"
                 />
               </div>
-
               <DialogFooter>
-                <Button type="submit">Buscar</Button>
+                <Button type="submit" className="bg-emerald-700">
+                  Buscar
+                </Button>
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="destructive"
                   onClick={() => setIsOpen(false)}
                 >
-                  Cancelar
+                  Fechar
                 </Button>
               </DialogFooter>
             </form>
