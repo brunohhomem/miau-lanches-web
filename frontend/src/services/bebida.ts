@@ -11,7 +11,6 @@ export const listBebida = async (): Promise<listBebidaReq[]> => {
   return response.data
 }
 
-// Requisição para buscar por ID
 export const findBebidaById = async (id: number): Promise<listBebidaReq> => {
   const response: AxiosResponse<listBebidaReq> = await api.get(
     `/bebidas/id/${id}`
@@ -19,7 +18,6 @@ export const findBebidaById = async (id: number): Promise<listBebidaReq> => {
   return response.data
 }
 
-// Requisição para buscar por Descrição
 export const findBebidaByDescricao = async (
   descricao: string
 ): Promise<listBebidaReq> => {

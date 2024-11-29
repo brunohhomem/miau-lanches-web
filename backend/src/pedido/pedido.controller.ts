@@ -30,10 +30,10 @@ export class PedidoController {
     return this.pedidoService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePedidoDto: UpdatePedidoDto) {
-    return this.pedidoService.update(+id, updatePedidoDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updatePedidoDto: UpdatePedidoDto) {
+  //   return this.pedidoService.update(+id, updatePedidoDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

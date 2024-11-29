@@ -51,7 +51,7 @@ model Pedido {
   lanches     Lanche[]
   adicionais  Ingrediente[]
   bebidas     Bebida[]
-  observacoes String[]      @default([])
+  observacoes String
   clienteId   Int
   cliente     Cliente       @relation(fields: [clienteId], references: [id])
 }

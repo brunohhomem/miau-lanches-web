@@ -1,10 +1,9 @@
 export interface CreatePedidoDto {
-  data?: Date;
   descricao: string;
-  clienteId: number;
-  lanchesIds: number[];
-  bebidasIds: number[];
-  adicionaisIds: number[];
   preco: number;
-  observacoes?: string[];
+  lanches: number[];
+  adicionais: number[];
+  bebidas: number[];
+  observacoes: string;
+  cliente: { nome: string; endereco: string; telefone: string };
 }

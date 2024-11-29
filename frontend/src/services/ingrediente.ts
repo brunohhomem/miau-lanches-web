@@ -13,7 +13,15 @@ export const listIngrediente = async (): Promise<listIngredienteReq[]> => {
   return response.data
 }
 
-// Requisição para buscar por ID
+export const listIngredienteAdicionais = async (): Promise<
+  listIngredienteReq[]
+> => {
+  const response: AxiosResponse<listIngredienteReq[]> = await api.get(
+    '/ingredientes/adicionais'
+  )
+  return response.data
+}
+
 export const findIngredienteById = async (
   id: number
 ): Promise<listIngredienteReq> => {
@@ -23,7 +31,6 @@ export const findIngredienteById = async (
   return response.data
 }
 
-// Requisição para buscar por Descrição
 export const findIngredienteByDescricao = async (
   descricao: string
 ): Promise<listIngredienteReq> => {

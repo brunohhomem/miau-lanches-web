@@ -8,19 +8,36 @@ export class PedidoService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createPedidoDto: CreatePedidoDto) {
-    const { lanchesIds, bebidasIds, adicionaisIds, ...rest } = createPedidoDto;
+    const {
+      lanches,
+      bebidas,
+      adicionais,
+      cliente,
+      observacoes,
+      preco,
+      descricao,
+    } = createPedidoDto;
+
+    const newCliente = await this.prismaService.cliente.create({
+      data: cliente,
+    });
+
+    const clienteId = newCliente.id;
 
     return this.prismaService.pedido.create({
       data: {
-        ...rest,
+        descricao,
+        preco,
+        observacoes,
+        cliente: { connect: { id: clienteId } },
         lanches: {
-          connect: lanchesIds?.map((id) => ({ id })) || [],
+          connect: lanches?.map((id) => ({ id })) || [],
         },
         bebidas: {
-          connect: bebidasIds?.map((id) => ({ id })) || [],
+          connect: bebidas?.map((id) => ({ id })) || [],
         },
         adicionais: {
-          connect: adicionaisIds?.map((id) => ({ id })) || [],
+          connect: adicionais?.map((id) => ({ id })) || [],
         },
       },
     });
@@ -52,25 +69,25 @@ export class PedidoService {
     });
   }
 
-  async update(id: number, updatePedidoDto: UpdatePedidoDto) {
-    const { lanchesIds, bebidasIds, adicionaisIds, ...rest } = updatePedidoDto;
+  // async update(id: number, updatePedidoDto: UpdatePedidoDto) {
+  //   const { lanches, bebidas, adicionais, ...rest } = updatePedidoDto;
 
-    return this.prismaService.pedido.update({
-      where: { id },
-      data: {
-        ...rest,
-        lanches: {
-          set: lanchesIds?.map((id) => ({ id })) || [],
-        },
-        bebidas: {
-          set: bebidasIds?.map((id) => ({ id })) || [],
-        },
-        adicionais: {
-          set: adicionaisIds?.map((id) => ({ id })) || [],
-        },
-      },
-    });
-  }
+  //   return this.prismaService.pedido.update({
+  //     where: { id },
+  //     data: {
+  //       ...rest,
+  //       lanches: {
+  //         set: lanches?.map((id) => ({ id })) || [],
+  //       },
+  //       bebidas: {
+  //         set: bebidas?.map((id) => ({ id })) || [],
+  //       },
+  //       adicionais: {
+  //         set: adicionais?.map((id) => ({ id })) || [],
+  //       },
+  //     },
+  //   });
+  // }
 
   async remove(id: number) {
     return this.prismaService.pedido.delete({
