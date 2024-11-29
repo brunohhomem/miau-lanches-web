@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -30,7 +31,7 @@ model Ingrediente {
   preco       Float    @default(0.0)
   isAdicional Boolean
   lanches     Lanche[]
-  Pedido      Pedido?  @relation(fields: [pedidoId], references: [id])
+  pedido      Pedido?  @relation(fields: [pedidoId], references: [id])
   pedidoId    Int?
 }
 
@@ -46,11 +47,11 @@ model Pedido {
   id          Int           @id @default(autoincrement())
   data        DateTime      @default(now())
   descricao   String
+  preco       Float         @default(0.0)
+  lanches     Lanche[]
+  adicionais  Ingrediente[]
+  bebidas     Bebida[]
+  observacoes String[]      @default([])
   clienteId   Int
   cliente     Cliente       @relation(fields: [clienteId], references: [id])
-  lanches     Lanche[]
-  bebidas     Bebida[]
-  adicionais  Ingrediente[]
-  preco       Float         @default(0.0)
-  observacoes String[]      @default([])
 }
