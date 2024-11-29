@@ -4,7 +4,7 @@ services:
     container_name: miau_db
     restart: always
     ports:
-      - '5433:5432'
+      - '5432:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -12,35 +12,39 @@ services:
     # volumes:
     #   - postgres_data:/var/lib/postgresql/data
 
-  # backend:
-  #   build: ./backend
-  #   container_name: miau_backend
-  #   restart: always
-  #   ports:
-  #     - '8080:8080'
-  #   environment:
-  #     DATABASE_URL: postgres://postgres:postgres@postgres:5432/miau_lanches_db
-  #   depends_on:
-  #     - postgres
-  #   volumes:
-  #     - ./backend:/app
-  #   command:
-  #     [
-  #       'sh',
-  #       '-c',
-  #       'npm install && npx prisma migrate deploy && npx prisma db seed && npm run dev'
-  #     ]
+  backend:
+    build: ./backend
+    container_name: miau_backend
+    restart: always
+    ports:
+      - '3001:3001'
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/miau_lanches_db
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command:
+      - sh
+      - -c
+      - |
+        npm install
+        npx prisma generate
+        npx prisma migrate deploy
+        npm run dev
 
-  # frontend:
-  #   build: ./frontend
-  #   container_name: miau_frontend
-  #   restart: always
-  #   ports:
-  #     - '80:3000'
-  #   depends_on:
-  #     - backend
-  #   volumes:
-  #     - ./frontend:/app
-  #   command: ['sh', '-c', 'npm install && npm run dev']
+  frontend:
+    build: ./frontend
+    container_name: miau_frontend
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: ['sh', '-c', 'npm install && npm run dev']
 # volumes:
 #   postgres_data:

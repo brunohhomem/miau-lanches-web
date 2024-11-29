@@ -1,0 +1,30 @@
+# Ignorar node_modules (será instalado dentro do container)
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Ignorar arquivos de ambiente locais e configurações de IDE
+.env
+.env.local
+.env.test
+.env.*.local
+.idea
+.vscode
+
+# Ignorar logs e arquivos temporários
+logs
+*.log
+*.tsbuildinfo
+
+# Ignorar build local (o container vai compilar)
+dist
+
+# Ignorar dependências específicas do Docker
+docker-compose.override.yml
+
+# Ignorar arquivos relacionados ao Prisma que não são necessários no container
+prisma/*.db
+prisma/*.log
+prisma/migrations/
