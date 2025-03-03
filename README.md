@@ -8,6 +8,7 @@ Bateu aquela fome? Não se preocupe! No Miau Lanches, temos a receita perfeita p
 - Agora, é hora de colocar a mão na massa! Utilize o Docker para preparar o ambiente e os ingredientes fresquinhos: `docker compose up -d`
 - Após a entrega dos containers, você poderá provar seu prato em: `http://localhost:3000/`
 
+
 Nosso docker-compose está cuidadosamente preparado para garantir que tudo seja cozinhado da melhor maneira, subindo e mantendo os containers e dependências necessárias para um teste impecável!
 
 ## Lista dos principais ingredientes
